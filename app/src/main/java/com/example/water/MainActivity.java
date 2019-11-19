@@ -22,6 +22,9 @@ import java.time.Month;
 public class MainActivity extends AppCompatActivity {
     private EditText month;
     private EditText next;
+    private EditText month1;
+    private EditText next1;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +32,57 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        EditText month = findViewById(R.id.month);
-        EditText next = findViewById(R.id.next);
-        Button button = findViewById(R.id.button);
+        month1 = findViewById(R.id.month);
+        next1 = findViewById(R.id.next);
+        button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                {
+                    String monthstring = month1.getText().toString();
+                    if (!TextUtils.isEmpty(monthstring)) {
+                        float degree = Float.parseFloat(monthstring);
+                        float fee = 0;
+                        if (degree >= 1 && degree <= 10) {
+                            fee = degree*7.35f;
+                        }else{
+                            if (degree >= 11 && degree <= 30) {
+                                fee = degree*9.45f-21;
+                            }else{
+                                if (degree >= 31 && degree <= 50) {
+                                    fee = degree*11.55f-84;
+                                }
+                            }
+                        }
 
+                        Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                        intent.putExtra("FEE",fee);
+                        startActivity(intent);
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("month")
+                                .setMessage("Fee "+fee)
+                                .setPositiveButton("OK",null)
+                                .show();
+
+                    }
+                    String nextstring = next1.getText().toString();
+                    if (!TextUtils.isEmpty(nextstring)) {
+                        float degree = Float.parseFloat(nextstring);
+                        float fee = 0;
+                        if (degree >= 1 && degree <= 20) {
+                            fee = degree*73.5f;
+                        }else{
+                            if (degree >= 21 && degree <= 60) {
+                                fee = degree*9.45f-42;
+                            }else{
+                                if (degree >= 61 && degree <= 100) {
+                                    fee = degree*11.55f-168;
+                                }
+                            }
+                        }
+                    }
+
+                }
             }
         });
 
@@ -48,43 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void fee (View view){
-        String monthstring = month.getText().toString();
-        if (!TextUtils.isEmpty(monthstring)) {
-            float degree = Float.parseFloat(monthstring);
-            float fee = 0;
-            if (degree >= 1 && degree <= 10) {
-                    fee = degree*7.35f;
-            }else{
-                if (degree >= 11 && degree <= 30) {
-                    fee = degree*9.45f-21;
-                }else{
-                    if (degree >= 31 && degree <= 50) {
-                        fee = degree*11.55f-84;
-                    }
-                }
-            }
-            Intent intent = new Intent(this,ResultActivity.class);
-            startActivity(intent);
-        }
-        String nextstring = next.getText().toString();
-        if (!TextUtils.isEmpty(nextstring)) {
-            float degree = Float.parseFloat(nextstring);
-            float fee = 0;
-            if (degree >= 1 && degree <= 20) {
-                fee = degree*73.5f;
-            }else{
-                if (degree >= 21 && degree <= 60) {
-                    fee = degree*9.45f-42;
-                }else{
-                    if (degree >= 61 && degree <= 100) {
-                        fee = degree*11.55f-168;
-                    }
-                }
-            }
-        }
-
-    }
+    public void fee (){}
 
 
 
