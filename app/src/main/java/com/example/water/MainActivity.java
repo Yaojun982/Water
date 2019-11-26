@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         Intent intent = new Intent(MainActivity.this,ResultActivity.class);
-                        intent.putExtra("FEE",fee);
+                        intent.putExtra(getString(R.string.Extract_fee),fee);
                         startActivity(intent);
                         new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("month")
-                                .setMessage("Fee "+fee)
-                                .setPositiveButton("OK",null)
+                                .setMessage(getString(R.string.fee)+fee)
+                                .setPositiveButton(R.string.ok,null)
                                 .show();
 
                     }
