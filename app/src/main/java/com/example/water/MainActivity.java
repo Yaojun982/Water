@@ -15,16 +15,24 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.time.Month;
 
 public class MainActivity extends AppCompatActivity {
     private EditText month;
-    private EditText next;
+
     private EditText month1;
     private EditText next1;
     private Button button;
+    private Switch sw;
+    float fee = 0.0f;
+    boolean isNext=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,27 +41,31 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         month1 = findViewById(R.id.month);
-        next1 = findViewById(R.id.next);
         button = findViewById(R.id.button);
+        Switch sw = findViewById(R.id.sw);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isNext = isChecked;
+                TextView text = findViewById(R.id.type);
+                text.setText(isChecked?getString(R.string.every_other_month):getString(R.string.monthly));
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 {
                     String monthstring = month1.getText().toString();
                     if (!TextUtils.isEmpty(monthstring)) {
-                        float degree = Float.parseFloat(monthstring);
-                        float fee = 0;
-                        if (degree >= 1 && degree <= 10) {
-                            fee = degree*7.35f;
-                        }else{
-                            if (degree >= 11 && degree <= 30) {
-                                fee = degree*9.45f-21;
-                            }else{
-                                if (degree >= 31 && degree <= 50) {
-                                    fee = degree*11.55f-84;
-                                }
-                            }
-                        }
+                        if (!isNext) {
+                            float degree = Float.parseFloat(monthstring);
+                            float fee = 0;
+                           if (degree >= 1 && degree <= 10){
+                               fee = (degree * 7.35f) + 0;
+                           } else if (degree >= 11 && degree <=30);
+                           fee = (degree*9.45f) - 21;
+                        }else if ( degree)
+
 
                         Intent intent = new Intent(MainActivity.this,ResultActivity.class);
                         intent.putExtra(getString(R.string.Extract_fee),fee);
@@ -85,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

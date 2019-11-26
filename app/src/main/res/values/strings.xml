@@ -6,4 +6,5 @@
     <string name="ok">OK</string>
     <string name="fee">Fee</string>
     <string name="Extract_fee">FEE</string>
+    <string name="monthly">monthly</string>
 </resources>
