@@ -3,26 +3,24 @@ package com.example.water;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.text.TextUtils;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.time.Month;
 
 public class MainActivity extends AppCompatActivity {
     private EditText month;
@@ -33,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private Switch sw;
     float fee = 0.0f;
     boolean isNext=false;
+    private String tag;
+    private View cities;
+
+    @Override
+    public void addContentView(View view, ViewGroup.LayoutParams params) {
+        super.addContentView(view, params);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        Log.d("TAG","onStop");
         month1 = findViewById(R.id.month);
         button = findViewById(R.id.button);
+        cities = findViewById(R.id.spinner);
         Switch sw = findViewById(R.id.sw);
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -52,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         button.setOnClickListener(new View.OnClickListener() {
+
+            private float fee;
+
             @Override
             public void onClick(View v) {
                 {
@@ -64,15 +74,17 @@ public class MainActivity extends AppCompatActivity {
                                fee = (degree * 7.35f) + 0;
                            } else if (degree >= 11 && degree <=30);
                            fee = (degree*9.45f) - 21;
-                        }else if ( degree)
+                        }else if ( degree >= 21 && degree <= 40);
+                            fee = (degree*12.45) -42;{
 
 
-                        Intent intent = new Intent(MainActivity.this,ResultActivity.class);
-                        intent.putExtra(getString(R.string.Extract_fee),fee);
+                        Intent
+                        } intent = new Intent(MainActivity.this,ResultActivity.class);
+                        intent.putExtra(getString(R.string.Extract_fee), MainActivity.this.fee);
                         startActivity(intent);
                         new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("month")
-                                .setMessage(getString(R.string.fee)+fee)
+                                .setMessage(getString(R.string.fee)+ MainActivity.this.fee)
                                 .setPositiveButton(R.string.ok,null)
                                 .show();
 
@@ -97,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //Spinner
+        Spinner cities
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +121,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("TAG","onStop");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("TAG","onResume");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("TAG"," onRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("TAG","onDestroy");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("TAG","onPause");
+    }
+
+
     public void fee (){}
 
 
